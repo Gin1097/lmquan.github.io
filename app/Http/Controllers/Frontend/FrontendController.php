@@ -247,4 +247,27 @@ class FrontendController extends Controller
         $data = $query->get();
         return $data;
     }
+    public function search(Request $req){
+        $product = Sanpham::where('sp_ten','like','%'.$req->key.'%')
+                            ->orWhere('sp_giaBan',$req->key)
+                            ->get();
+        $danhsachsanpham = $this->searchSanPham($req);
+                
+                        // Query Lấy các hình ảnh liên quan của các Sản phẩm đã được lọc
+        $danhsachhinhanhlienquan = DB::table('hinhanh')
+                            ->whereIn('sp_ma', $danhsachsanpham->pluck('sp_ma')->toArray())
+                            ->get();
+                
+                        // Query danh sách Loại
+        $danhsachloai = Loai::all();
+                
+                        // Query danh sách màu
+        $danhsachmau = Mau::all();
+        return view('frontend.widgets.search')
+            ->with('danhsachsanpham', $danhsachsanpham)
+            ->with('danhsachhinhanhlienquan', $danhsachhinhanhlienquan)
+            ->with('danhsachmau', $danhsachmau)
+            ->with('danhsachloai', $danhsachloai)
+            ->with('product', $product);
+    }
 }

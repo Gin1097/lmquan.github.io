@@ -18,7 +18,7 @@ Sửa Nhân viên. Vui lòng nhập thông tin và bấm Lưu.
 @endsection
 
 @section('content')
-<form method="post" action="{{ route('backend.nhanvien.update', ['id' => $nv->nv_ma]) }}" enctype="multipart/form-data">
+<form method="post" action="{{ route('backend.nhanvien.update', ['id' => $nv->nv_ma]) }}">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT" />
     <div class="form-group">
@@ -89,7 +89,7 @@ Sửa Nhân viên. Vui lòng nhập thông tin và bấm Lưu.
     </div>
     <div class="form-group">
         <label for="nv_capNhat">Ngày cập nhật</label>
-        <input type="text" class="form-control" id="nv_capNhat" name="nv_capNhat" value="{{ old('nv_capNhat', $nv->nv_capNhat) }}" data-mask-datetime>
+        <input type="text" class="form-control" id="nv_capNhat" name="nv_capNhat" value="{{ date('Y-m-d H:i:s') }}" data-mask-datetime>
     </div>
     <div class="form-group">
     <select name="nv_trangThai" class="form-control">

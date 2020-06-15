@@ -272,6 +272,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/admin/xuatkho/edit/{id}', 'XuatKhoController@edit')->name('backend.xuatkho.edit');
     Route::put('/admin/xuatkho/update/{id}', 'XuatKhoController@update')->name('backend.xuatkho.update');
     Route::delete('/admin/xuatkho/delete/{id}', 'XuatKhoController@destroy')->name('backend.xuatkho.destroy');
+    Route::get('/admin/xuatkho/print/{id}', 'XuatKhoController@print')->name('backend.xuatkho.print');
         //Ajax
         Route::get('/admin/donvitinh/{idSanpham}', 'AjaxController@getDonvitinh');
         Route::get('/admin/kho/{idSanpham}', 'AjaxController@getKho');
@@ -294,6 +295,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/admin/chuyenkho/edit/{id}', 'ChuyenKhoController@edit')->name('backend.chuyenkho.edit');
     Route::put('/admin/chuyenkho/update/{id}', 'ChuyenKhoController@update')->name('backend.chuyenkho.update');
     Route::delete('/admin/chuyenkho/delete/{id}', 'ChuyenKhoController@destroy')->name('backend.chuyenkho.destroy');
+    Route::get('/admin/chuyenkho/print/{id}', 'ChuyenKhoController@print')->name('backend.chuyenkho.print');
 
         //Ajax
             Route::get('/admin/kho/{idSanpham}', 'AjaxController@getKho');
@@ -337,28 +339,12 @@ Route::post('/admin/activate/{nv_ma}', 'BackendController@activate')->name('acti
 // Các route dành riêng cho frontend
 // Namespace PHP
 Route::get('/', 'Frontend\FrontendController@index')->name('frontend.home');
-
-
-
-
-
+Route::get('/search', 'Frontend\FrontendController@search')->name('frontend.search');
 Route::get('/gioi-thieu', 'Frontend\FrontendController@about')->name('frontend.about');
-
-
-
-
-
-
 Route::get('/lien-he', 'Frontend\FrontendController@contact')->name('frontend.contact');
-
 Route::post('/lien-he/goi-loi-nhan', 'Frontend\FrontendController@sendMailContactForm')->name('frontend.contact.sendMailContactForm');
-
-
-
 Route::get('/san-pham', 'Frontend\FrontendController@product')->name('frontend.product');
 Route::get('/san-pham/{id}', 'Frontend\FrontendController@productDetail')->name('frontend.productDetail');
-
 Route::get('/gio-hang', 'Frontend\FrontendController@cart')->name('frontend.cart');
-
 Route::post('/dat-hang', 'Frontend\FrontendController@order')->name('frontend.order');
 Route::get('/dat-hang/hoan-tat', 'Frontend\FrontendController@orderFinish')->name('frontend.orderFinish');

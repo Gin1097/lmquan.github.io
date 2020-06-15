@@ -1,7 +1,7 @@
 @extends('print.layout.paper')
 
 @section('title')
-Hóa đơn sỉ
+Phiếu chuyển
 @endsection
 
 @section('paper-size') A4 @endsection
@@ -198,22 +198,18 @@ button {
 <body onload="window.print();">
 <div id="page" class="page">
 <div class= "header">
-    <div class="date-right">{{ $hds->hds_ngayXuatHoaDon }}</div><br />
-    <div class="date-right">{{ $hds->hds_nguoiMuaHang }}</div>
+    <div class="date-right">{{ $ck->ck_ngay }}</div>
     </div>
     <div class="header">
         <img src="{{ asset('img/f-shop.png') }}" class="logo" />
         <div class="company">C.Ty sỉ & lẻ hoa tươi F-Shop</div>
-        <div class= "info"><b>Thanh toán :</b> {{ $hds->thanhtoanhoadonsi->tt_ten }}</div>
-        <div class= "info"><b>Đơn vị : </b>{{ $hds->hds_tenDonVi }}</div>
-        <div class= "info"><b>Địa chỉ : </b>{{ $hds->hds_diaChi }}</div>
-        <div class= "info"><b>Mã thuế : </b>{{ $hds->hds_maSoThue }}, <b>Số TK : </b>{{ $hds->hds_soTaiKhoan }}</div>
-        
+        <div class= "info"><b>Lý do : </b>{{ $ck->ck_lydo }}</div>
+
     </div>
     
   <br/>
   <div class="title">
-        HÓA ĐƠN THANH TOÁN
+         PHIẾU CHUYỂN KHO
         <br/>
         -------oOo-------
   </div>
@@ -223,51 +219,44 @@ button {
     <tr>
       <th>STT</th>
       <th>Tên sản phẩm</th>
-      <th>Màu</th>
+      <th>Kho cũ</th>
+      <th>Kho mới</th>
       <th>Số lượng</th>
-      <th>Đơn giá</th>
+      <th>Đơn giá</th> 
     </tr><?php
-    $tongsotien = 0;
     $stt = 1;
     ?>
-    @foreach ($ctdh as $str)
+    @foreach ($ctck as $str)
     
-        @if ($hds->dh_ma == $str->dh_ma)
-        <?php
-            $tongsotien += $str->ctdh_soLuong*$str->ctdh_donGia;
-            
-        ?>
+        @if ($ck->ck_ma == $str->ck_ma)
             <tr>
             <td class=\"cotSTT\">{{ $stt }}</td>
-            <td class=\"cotTenSanPham\">{{ $str->donhangsanpham->sp_ten }}</td>
-            <td class=\"cotTenSanPham\">{{ $str->mau->m_ten }}</td>
-            <td class=\"cotSoLuong\" align='center'>{{ $str->ctdh_soLuong }}</td>
-            <td class=\"cotGia\">{{ number_format($str->ctdh_donGia,0,",",".") }} vnd</td>
+            <td class=\"cotTenSanPham\">{{ $str->sanpham->sp_ten }}</td>
+            <td class=\"cotTenSanPham\" align='center'>{{ $str->khocu->kho_ten }}</td>
+            <td class=\"cotTenSanPham\" align='center'>{{ $str->khomoi->kho_ten }}</td>
+            <td class=\"cotSoLuong\" align='center'>{{ $str->ctck_soLuong }}</td>
+            <td class=\"cotGia\">{{ number_format($str->ctck_thanhtien/$str->ctck_soLuong,0,",",".") }} vnd</td>
+            
+            <tr>
+                <td colspan="5" class="tong">Tổng cộng</td>
+                <td class="cotGia"><?php echo number_format(($str->ctck_thanhtien),0,",",".")?> vnd</td>
+            </tr>
             </tr> 
         <?php
         $stt++;
         ?>    
         @endif
     @endforeach
-    <tr>
-      <td colspan="4" class="tong">Tổng cộng</td>
-      <td class="cotGia"><?php echo number_format(($tongsotien),0,",",".")?> vnd</td>
-    </tr>
+    
     </table>
     <div class="text-tong">TỔNG (viết bằng chữ): ..................................................................................................................................................................
 
         .........................................................................................................................................................................................................
     </div>
     <div class="footer-left"> Cần thơ, ngày ... tháng ... năm 20..<br/>
-    Nhân viên lập hóa đơn <br />
+    Nhân viên lập phiếu chuyển <br />
     <br />
-    {{ $hds->nhanvienlaphoadon->nv_hoTen }}</div>
-    <div class="footer-right"> Cần thơ, ngày ... tháng ... năm 20..<br/>
-        Thủ trưởng
-        <br />
-        <br />
-        {{ $hds->nhanvienthutruong->nv_hoTen }} 
-    </div>
+    {{ $ck->nhanvien->nv_hoTen }}</div>
 </div>
 </body>
 @endsection

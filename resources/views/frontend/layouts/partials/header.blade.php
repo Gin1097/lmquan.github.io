@@ -5,7 +5,8 @@
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar">
-                    Free shipping for standard order over $100
+                        <h9>{{ __('sunshine.welcome') }}</h9>
+
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
@@ -37,7 +38,7 @@
 
                 <!-- Logo desktop -->
                 <a href="" class="logo">
-                    <img src="{{ asset('themes/cozastore/images/icons/logo-01.png') }}" alt="IMG-LOGO">
+                    <img src="{{ asset('themes/cozastore/images/icons/f-shop.png') }}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -89,7 +90,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.html"><img src="{{ asset('themes/cozastore/images/icons/logo-01.png') }}" alt="IMG-LOGO"></a>
+            <a href="index.html"><img src="{{ asset('themes/cozastore/images/icons/f-shop.png') }}" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -121,7 +122,8 @@
         <ul class="topbar-mobile">
             <li>
                 <div class="left-top-bar">
-                    Free shipping for standard order over $100
+                   
+                        <h1>{{ __('sunshine.welcome') }}</h1>
                 </div>
             </li>
 
@@ -147,37 +149,25 @@
         </ul>
 
         <ul class="main-menu-m">
-            <li>
-                <a href="index.html">Home</a>
-                <ul class="sub-menu-m">
-                    <li><a href="index.html">Homepage 1</a></li>
-                    <li><a href="home-02.html">Homepage 2</a></li>
-                    <li><a href="home-03.html">Homepage 3</a></li>
-                </ul>
-                <span class="arrow-main-menu-m">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </span>
-            </li>
+        <li class="{{ Request::is('') ? 'active-menu' : '' }}">
+            <a href="{{ route('frontend.home') }}">Trang chủ</a>
+        </li>
 
-            <li>
-                <a href="#">Shop</a>
-            </li>
+        <li class="{{ Request::is('san-pham') ? 'active-menu' : '' }}">
+            <a href="{{ route('frontend.product') }}">Sản phẩm</a>
+        </li>
 
-            <li>
-                <a href="#" class="label1 rs1" data-label1="hot">Features</a>
-            </li>
+        <li class="{{ Request::is('gioi-thieu') ? 'active-menu' :   '' }}">
+            <a href="{{ route('frontend.about') }}">Giới thiệu</a>
+        </li>
 
-            <li>
-                <a href="#">Blog</a>
-            </li>
+        <li class="{{ Request::is('lien-he') ? 'active-menu' : '' }}">
+            <a href="{{ route('frontend.contact') }}">Liên hệ</a>
+        </li>
 
-            <li>
-                <a href="#">About</a>
-            </li>
-
-            <li>
-                <a href="#">Contact</a>
-            </li>
+        <li class="{{ Request::is('admin') ? 'active-menu' : '' }}">
+            <a href="{{ route('backend.dashboard') }}">Quản trị</a>
+        </li>
         </ul>
     </div>
 

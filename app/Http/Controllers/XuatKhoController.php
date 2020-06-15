@@ -160,4 +160,11 @@ class XuatKhoController extends Controller
         Session::flash('alert-danger', 'Xóa thành công ^^~!!!');
         return redirect()->route('backend.xuatkho.index');
     }
+    public function print($id){
+        $xk = Xuatkho::where("xk_ma", $id)->first();
+        $ctxk = ChitietXuatkho::all();
+        return view('backend.xuatkho.print')
+            ->with('xk', $xk)
+            ->with('ctxk', $ctxk);
+    }
 }

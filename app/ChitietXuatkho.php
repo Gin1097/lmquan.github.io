@@ -19,4 +19,5 @@ class ChitietXuatkho extends Model
     {
         return $this->belongsTo('App\Sanpham', 'sp_ma', 'sp_ma');
     }
+    
 }

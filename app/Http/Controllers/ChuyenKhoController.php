@@ -152,4 +152,11 @@ class ChuyenKhoController extends Controller
         Session::flash('alert-danger', 'Xóa thành công ^^~!!!');
         return redirect()->route('backend.chuyenkho.index');
     }
+    public function print($id) {
+        $ck = Chuyenkho::where("ck_ma", $id)->first();
+        $ctck = ChitietChuyenkho::all();
+        return view('backend.chuyenkho.print')
+            ->with('ck', $ck)
+            ->with('ctck', $ctck);
+    }
 }

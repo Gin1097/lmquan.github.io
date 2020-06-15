@@ -44,6 +44,7 @@ Danh sách các phiếu xuất kho có trong Hệ thống. Bạn có thể CRUD!
             <td>{{ $xuatkho->xk_tongtien }}</td>          
             <td>
                 <a href="{{ route('backend.xuatkho.edit', ['id' => $xuatkho->xk_ma]) }}" class="btn btn-success">Sửa</a>
+                <a href="{{ route('backend.xuatkho.print', ['id' => $xuatkho->xk_ma]) }}" class="btn btn-warning">In</a>
                 <form class="d-inline" method="post" action="{{ route('backend.xuatkho.destroy', ['id' => $xuatkho->xk_ma]) }}">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE" />
