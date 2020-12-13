@@ -154,38 +154,71 @@ class SanPhamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $sp = SanPham::where("sp_ma",  $id)->first();
-        $sp->sp_ten = $request->sp_ten;
-        $sp->sp_giaGoc = $request->sp_giaGoc;
-        $sp->sp_giaBan = $request->sp_giaBan;
-        $sp->sp_thongTin = $request->sp_thongTin;
-        $sp->sp_danhGia = $request->sp_danhGia;
-        $sp->sp_taoMoi = $request->sp_taoMoi;
-        $sp->sp_capNhat = $request->sp_capNhat;
-        $sp->sp_trangThai = $request->sp_trangThai;
-        $sp->l_ma = $request->l_ma;
-        $sp->dvt_ma = $request->dvt_ma;
-        $sp->kho_ma = $request->kho_ma;
+{
+    $validation = $request->validate([
+        'sp_hinh' => 'file|image|mimes:jpeg,png,gif,webp|max:2048',
+        // Cú pháp dùng upload nhiều file
+        'sp_hinhanhlienquan.*' => 'image|mimes:jpeg,png,gif,webp|max:2048'
+    ]);
 
-        if($request->hasFile('sp_hinh'))
+    $sp = SanPham::where("sp_ma",  $id)->first();
+    $sp->sp_ten = $request->sp_ten;
+    $sp->sp_giaGoc = $request->sp_giaGoc;
+    $sp->sp_giaBan = $request->sp_giaBan;
+    $sp->sp_thongTin = $request->sp_thongTin;
+    $sp->sp_danhGia = $request->sp_danhGia;
+    $sp->sp_taoMoi = $request->sp_taoMoi;
+    $sp->sp_capNhat = $request->sp_capNhat;
+    $sp->sp_trangThai = $request->sp_trangThai;
+    $sp->l_ma = $request->l_ma;
+
+    if($request->hasFile('sp_hinh'))
+    {
+        // Xóa hình cũ để tránh rác
+        Storage::delete('public/photos/' . $sp->sp_hinh);
+
+        // Upload hình mới
+        // Lưu tên hình vào column sp_hinh
+        $file = $request->sp_hinh;
+        $sp->sp_hinh = $file->getClientOriginalName();
+        
+        // Chép file vào thư mục "photos"
+        $fileSaved = $file->storeAs('public/photos', $sp->sp_hinh);
+    }
+
+    // Lưu hình ảnh liên quan
+    if($request->hasFile('sp_hinhanhlienquan')) {
+        // DELETE các dòng liên quan trong table `HinhAnh`
+        foreach($sp->hinhanhlienquan()->get() as $hinhAnh)
         {
             // Xóa hình cũ để tránh rác
-            Storage::delete('public/photos/' . $sp->sp_hinh);
+            Storage::delete('public/photos/' . $hinhAnh->ha_ten);
 
-            // Upload hình mới
-            // Lưu tên hình vào column sp_hinh
-            $file = $request->sp_hinh;
-            $sp->sp_hinh = $file->getClientOriginalName();
-            
-            // Chép file vào thư mục "photos"
-            $fileSaved = $file->storeAs('public/photos', $sp->sp_hinh);
+            // Xóa record
+            $hinhAnh->delete();
         }
-        $sp->save();
 
-        Session::flash('alert-warning', 'Cập nhật thành công ^^~!!!');
-        return redirect()->route('backend.sanpham.index');
+        $files = $request->sp_hinhanhlienquan;
+
+        // duyệt từng ảnh và thực hiện lưu
+        foreach ($request->sp_hinhanhlienquan as $index => $file) {
+            
+            $file->storeAs('public/photos', $file->getClientOriginalName());
+
+            // Tạo đối tưọng HinhAnh
+            $hinhAnh = new HinhAnh();
+            $hinhAnh->sp_ma = $sp->sp_ma;
+            $hinhAnh->ha_stt = ($index + 1);
+            $hinhAnh->ha_ten = $file->getClientOriginalName();
+            $hinhAnh->save();
+        }
     }
+
+    $sp->save();
+
+    Session::flash('alert-warning', 'Cập nhật thành công ^^~!!!');
+    return redirect()->route('backend.sanpham.index');
+}
 
     /**
      * Remove the specified resource from storage.

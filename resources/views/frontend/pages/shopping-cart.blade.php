@@ -49,8 +49,8 @@ Giỏ hàng Shop Hoa tươi - Sunshine
                         <li><span class="error" ng-show="orderForm.kh_diaChi.$error.maxlength">Địa chỉ phải <= 250 ký tự</span> </li> <!-- Thông báo lỗi kh_dienThoai -->
                         <li><span class="error" ng-show="orderForm.kh_dienThoai.$error.minlength">Điện thoại phải > 6 ký tự</span></li>
                         <li><span class="error" ng-show="orderForm.kh_dienThoai.$error.maxlength">Điện thoại phải <= 11 ký tự</span> </li> </li> </div> <div class="form-group">
-                    <label for="kh_taiKhoan">Tài khoản:</label>
-                    <input type="text" class="form-control" id="kh_taiKhoan" name="kh_taiKhoan" ng-model="kh_taiKhoan" ng-minlength="6" ng-maxlength="50" ng-required=true>
+                                    <label for="kh_taiKhoan">Tài khoản:</label>
+                                    <input type="text" class="form-control" id="kh_taiKhoan" name="kh_taiKhoan" ng-model="kh_taiKhoan" ng-minlength="6" ng-maxlength="50" ng-required=true>
                 </div>
                 <div class="form-group">
                     <label for="kh_hoTen">Họ tên:</label>
@@ -225,7 +225,7 @@ Giỏ hàng Shop Hoa tươi - Sunshine
                     data: JSON.stringify(dataInputOrderForm)
                 }).then(function successCallback(response) {
                     // Clear giỏ hàng ngCart
-                    //$scope.ngCart.empty();
+                    $scope.ngCart.empty();
 
                     // Gởi mail thành công, thông báo cho khách hàng biết
                     swal('Đơn hàng hoàn tất!', 'Xin cám ơn Quý khách!', 'success');

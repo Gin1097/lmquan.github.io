@@ -28,6 +28,7 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
         </ul>
     </div>
 @endif
+
 <form method="post" action="{{ route('backend.sanpham.update', ['id' => $sp->sp_ma]) }}" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT" />
     {{ csrf_field() }}
@@ -39,30 +40,6 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
                 <option value="{{ $loai->l_ma }}" selected>{{ $loai->l_ten }}</option>
                 @else
                 <option value="{{ $loai->l_ma }}">{{ $loai->l_ten }}</option>
-                @endif
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="dvt_ma">Đơn vị tính</label>
-        <select name="dvt_ma" class="form-control">
-            @foreach($danhsachdonvitinh as $donvitinh)
-                @if($donvitinh->dvt_ma == $sp->dvt_ma)
-                <option value="{{ $donvitinh->dvt_ma }}" selected>{{ $donvitinh->dvt_ten }}</option>
-                @else
-                <option value="{{ $donvitinh->dvt_ma }}">{{ $donvitinh->dvt_ten }}</option>
-                @endif
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="kho_ma">Kho sản phẩm</label>
-        <select name="kho_ma" class="form-control">
-            @foreach($danhsachkho as $kho)
-                @if($kho->kho_ma == $sp->kho_ma)
-                <option value="{{ $kho->kho_ma }}" selected>{{ $kho->kho_ten }}</option>
-                @else
-                <option value="{{ $kho->kho_ma }}">{{ $kho->kho_ten }}</option>
                 @endif
             @endforeach
         </select>
@@ -102,10 +79,10 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
         <input type="text" class="form-control" id="sp_capNhat" name="sp_capNhat" value="{{ old('sp_capNhat', $sp->sp_capNhat) }}" data-mask-datetime>
     </div>
     <div class="form-group">
-        <select name="sp_trangThai" class="form-control">
+    <select name="sp_trangThai" class="form-control">
         <option value="1" {{ old('sp_trangThai', $sp->sp_trangThai) == 1 ? "selected" : "" }}>Khóa</option>
         <option value="2" {{ old('sp_trangThai', $sp->sp_trangThai) == 2 ? "selected" : "" }}>Khả dụng</option>
-        </select>
+    </select>
     </div>
     <div class="form-group">
         <div class="file-loading">
@@ -116,6 +93,7 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
     <button type="submit" class="btn btn-primary">Lưu</button>
 </form>
 @endsection
+
 @section('custom-scripts')
 <!-- Các script dành cho thư viện bootstrap-fileinput -->
 <script src="{{ asset('vendor/bootstrap-fileinput/js/plugins/sortable.js') }}" type="text/javascript"></script>
@@ -123,6 +101,7 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
 <script src="{{ asset('vendor/bootstrap-fileinput/js/locales/fr.js') }}" type="text/javascript"></script>
 <script src="{{ asset('vendor/bootstrap-fileinput/themes/fas/theme.js') }}" type="text/javascript"></script>
 <script src="{{ asset('vendor/bootstrap-fileinput/themes/explorer-fas/theme.js') }}" type="text/javascript"></script>
+
 <script>
     $(document).ready(function() {
         $("#sp_hinh").fileinput({
@@ -151,6 +130,7 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
                 },
             ]
         });
+
         $("#sp_hinhanhlienquan").fileinput({
             theme: 'fas',
             showUpload: false,
@@ -184,13 +164,16 @@ Sửa Sản phẩm. Vui lòng nhập thông tin và bấm Lưu.
         });
     });
 </script>
+
 <!-- Các script dành cho thư viện Mặt nạ nhập liệu InputMask -->
 <script src="{{ asset('theme/adminlte/plugins/input-mask/jquery.inputmask.js') }}"></script>
 <script src="{{ asset('theme/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
 <script src="{{ asset('theme/adminlte/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+
 <script>
 $(document).ready(function(){
     
 });
 </script>
+
 @endsection
