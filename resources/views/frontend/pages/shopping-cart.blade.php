@@ -181,7 +181,6 @@ Giỏ hàng Shop Hoa tươi - Sunshine
     // Khai báo controller `orderController`
     app.controller('orderController', function($scope, $http, ngCart) {
         $scope.ngCart = ngCart;
-
         // hàm submit form sau khi đã kiểm tra các ràng buộc (validate)
         $scope.submitOrderForm = function() {
             debugger;
@@ -197,7 +196,6 @@ Giỏ hàng Shop Hoa tươi - Sunshine
                     "kh_diaChi": $scope.orderForm.kh_diaChi.$viewValue,
                     "kh_dienThoai": $scope.orderForm.kh_dienThoai.$viewValue,
                 };
-
                 var dataInputOrderForm_DatHang = {
                     "dh_thoiGianNhanHang": $scope.orderForm.dh_thoiGianNhanHang.$viewValue,
                     "dh_nguoiNhan": $scope.orderForm.dh_nguoiNhan.$viewValue,
@@ -208,16 +206,13 @@ Giỏ hàng Shop Hoa tươi - Sunshine
                     "vc_ma": $scope.orderForm.vc_ma.$viewValue,
                     "tt_ma": $scope.orderForm.tt_ma.$viewValue,
                 };
-
                 var dataCart = ngCart.getCart();
-
                 var dataInputOrderForm = {
                     "khachhang": dataInputOrderForm_KhachHang,
                     "donhang": dataInputOrderForm_DatHang,
                     "giohang": dataCart,
                     "_token": "{{ csrf_token() }}",
                 };
-
                 // sử dụng service $http của AngularJS để gởi request POST đến route `frontend.order`
                 $http({
                     url: "{{ route('frontend.order') }}",
@@ -225,11 +220,9 @@ Giỏ hàng Shop Hoa tươi - Sunshine
                     data: JSON.stringify(dataInputOrderForm)
                 }).then(function successCallback(response) {
                     // Clear giỏ hàng ngCart
-                    $scope.ngCart.empty();
-
+                    //$scope.ngCart.empty();
                     // Gởi mail thành công, thông báo cho khách hàng biết
                     swal('Đơn hàng hoàn tất!', 'Xin cám ơn Quý khách!', 'success');
-
                     // Chuyển sang trang Hoàn tất đặt hàng
                     if (response.data.redirectUrl) {
                         location.href = response.data.redirectUrl;

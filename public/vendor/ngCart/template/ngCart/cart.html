@@ -30,9 +30,9 @@
                                     </div>
                                 </td>
                                 <td class="column-2"><% item.getName() %></td>
-                                <td class="column-3"><% item.getPrice() | currency %></td>
+                                <td class="column-3"><% item.getPrice() | number %> vnđ</td>
                                 <td class="column-4"><% item.getQuantity() | number %></td>
-                                <td class="column-5"><% item.getTotal() | currency %> </td>
+                                <td class="column-5"><% item.getTotal() | number %> vnđ</td>
                                 <td><span ng-click="ngCart.removeItemById(item.getId())"
                                         class="glyphicon glyphicon-remove remove">Xóa</span></td>
                             </tr>
@@ -51,13 +51,13 @@
                         <!-- Thuế -->
                         <div class="size-208" ng-show="ngCart.getTax()">
                             <span class="mtext-101 cl2">
-                                Thuế
+                                Thuế (<% ngCart.getTaxRate() %>%):
                             </span>
                         </div>
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getTax()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getTax() | currency %>
+                                <% ngCart.getTax() | number %> vnđ
                             </span>
                         </div>
 
@@ -70,7 +70,7 @@
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getShipping()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getShipping() | currency %>
+                                <% ngCart.getShipping() | number %> vnđ
                             </span>
                         </div>
 
@@ -83,7 +83,7 @@
 
                         <div class="size-209 p-t-1">
                             <span class="mtext-110 cl2">
-                                <% ngCart.totalCost() | currency %>
+                                <% ngCart.totalCost() | number %> vnđ
                             </span>
                         </div>
                     </div>
